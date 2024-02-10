@@ -3,6 +3,7 @@ using System.Net;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using SolarWatch.Model;
+using SolarWatch.Services;
 
 
 namespace SolarWatch.Controllers;
@@ -14,15 +15,22 @@ public class SolarController : ControllerBase
 {
     private readonly ILogger<SolarController> _logger;
     private readonly string _apiKey;
+    private readonly IJsonProcessor _jsonProcessor;
+    private readonly ISunApi _sunApi;
+    private readonly IGeoCodingApi _geoCodingApi;
     
     
-    public SolarController(ILogger<SolarController> logger)
+    
+    public SolarController(ILogger<SolarController> logger, IJsonProcessor jsonProcessor, ISunApi sunApi, IGeoCodingApi geoCodingApi)
     {
         _logger = logger;
         _apiKey = "d00266d7b05eb74f62ad1714907c8af5";
+        _jsonProcessor = jsonProcessor;
+        _sunApi = sunApi;
+        _geoCodingApi = geoCodingApi;
     }
-
     
+   
     
     
     [HttpGet("SunriseSunset")]
@@ -30,13 +38,16 @@ public class SolarController : ControllerBase
     {
         try
         {
-            var geoCoordinates = GetGeoCoordinates(city);
+            var geoCoordinatesResponse = _geoCodingApi.GetCoordinates(city);
+            var geoCoordinates = _jsonProcessor.ProcessCoordinatesJson(geoCoordinatesResponse);
+            
             if(geoCoordinates == null)
             {
                 return NotFound("City not found");
             }
             
-            var sunriseSunset = GetSunriseSunset(geoCoordinates, date);
+            var sunriseSunsetResponse = _sunApi.GetSunriseSunset(geoCoordinates, date);
+            var sunriseSunset = _jsonProcessor.ProcessSunriseSunsetJson(sunriseSunsetResponse);
             var solarWatch = new SolarWatch
             {
                 Date = date,
@@ -52,52 +63,5 @@ public class SolarController : ControllerBase
         }
     }
 
-    private GeoCoordinates GetGeoCoordinates(string city)
-    {
-        var url = $"http://api.openweathermap.org/geo/1.0/direct?q={city}&limit={1}&appid={_apiKey}";
-        try
-        {
-            using var client = new WebClient();
-            var response = client.DownloadString(url);
-            _logger.LogInformation($"Received data from API: {response}");
-            if(response == "[]")
-            {
-                return null;
-            }
-            var json = JsonDocument.Parse(response);
-            var root = json.RootElement;
-            var latitude = root[0].GetProperty("lat").GetDouble();
-            var longitude = root[0].GetProperty("lon").GetDouble();
-            
-            return new GeoCoordinates
-            {
-                Latitude = latitude,
-                Longitude = longitude
-            };
-        }
-        catch (WebException e)
-        {
-            _logger.LogError($"An error occurred while fetching data from API: {e.Message}");
-            return null;
-        }
-    }
-
-
-    private SunriseSunset GetSunriseSunset(GeoCoordinates coordinates, DateOnly date)
-    {
-        var url = $"https://api.sunrise-sunset.org/json?lat={coordinates.Latitude}&lng={coordinates.Longitude}&date={date.Year}-{date.Month}-{date.Day}&formatted=0&date={date.Year}-{date.Month}-{date.Day}";
-        var client = new WebClient();
-        var response = client.DownloadString(url);
-        var json = JsonDocument.Parse(response);
-        var root = json.RootElement;
-        var sunrise = root.GetProperty("results").GetProperty("sunrise").GetDateTime();
-        var sunset = root.GetProperty("results").GetProperty("sunset").GetDateTime();
-        _logger.LogInformation($"Sunrise: {sunrise}, Sunset: {sunset}");
-        var sunriseSunset = new SunriseSunset
-        {
-            Sunrise = TimeOnly.FromDateTime(sunrise),
-            Sunset = TimeOnly.FromDateTime(sunset)
-        };
-        return sunriseSunset;
-    }
+    
 }
