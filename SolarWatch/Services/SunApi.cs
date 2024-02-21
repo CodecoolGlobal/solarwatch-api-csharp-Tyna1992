@@ -13,7 +13,7 @@ public class SunApi : ISunApi
         _logger = logger;
     }
     
-    public async Task<string> GetSunriseSunset(GeoCoordinates coordinates, DateOnly date)
+    public async Task<string> GetSunriseSunset(GeoCoordinates coordinates, DateTime date)
     {
         var url = $"https://api.sunrise-sunset.org/json?lat={coordinates.Latitude}&lng={coordinates.Longitude}&date={date.Year}-{date.Month}-{date.Day}&formatted=0&date={date.Year}-{date.Month}-{date.Day}";
         var client = new HttpClient();

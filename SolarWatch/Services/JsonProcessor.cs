@@ -29,6 +29,17 @@ public class JsonProcessor : IJsonProcessor
 
     }
     
+    public string ProcessCityJson(string data)
+    {
+        JsonDocument json = JsonDocument.Parse(data);
+        JsonElement root = json.RootElement;
+        
+        var country = root[0].GetProperty("country").GetString();
+        
+        return country;
+       
+    }
+    
     public SunriseSunset ProcessSunriseSunsetJson(string data)
     {
         JsonDocument json = JsonDocument.Parse(data);
@@ -38,8 +49,8 @@ public class JsonProcessor : IJsonProcessor
         _logger.LogInformation($"Sunrise: {sunrise}, Sunset: {sunset}");
         var sunriseSunset = new SunriseSunset
         {
-            Sunrise = TimeOnly.FromDateTime(sunrise),
-            Sunset = TimeOnly.FromDateTime(sunset)
+            Sunrise = sunrise,
+            Sunset = sunset
         };
         return sunriseSunset;
     }

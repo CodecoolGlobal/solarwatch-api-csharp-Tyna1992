@@ -2,11 +2,11 @@ namespace SolarWatch;
 
 public class SolarWatch
 {
-    public DateOnly Date { get; set; }
+    public DateTime Date { get; set; }
 
-    public TimeOnly Sunrise { get; set; }
+    public DateTime Sunrise { get; set; }
 
-    public TimeOnly Sunset { get; set; }
+    public DateTime Sunset { get; set; }
     
     public string City { get; set; }
 

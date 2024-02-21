@@ -2,6 +2,9 @@
 
 public class SunriseSunset
 {
-    public TimeOnly Sunrise { get; set; }
-    public TimeOnly Sunset { get; set; }
+    public int Id { get; set; }
+    public DateTime Sunrise { get; set; }
+    public DateTime Sunset { get; set; }
+    public City City { get; set; }
+    
 }
