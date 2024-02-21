@@ -34,19 +34,20 @@ public class SolarController : ControllerBase
     
     
     [HttpGet("SunriseSunset")]
-    public ActionResult<SolarWatch> GetSunriseSunset([Required]string city,[Required] DateOnly date)
+    public async Task<ObjectResult> GetSunriseSunset([Required]string city,[Required] DateOnly date)
     {
         try
         {
-            var geoCoordinatesResponse = _geoCodingApi.GetCoordinates(city);
+            var geoCoordinatesResponse = await _geoCodingApi.GetCoordinates(city);
+            
             var geoCoordinates = _jsonProcessor.ProcessCoordinatesJson(geoCoordinatesResponse);
             
             if(geoCoordinates == null)
             {
-                return NotFound("City not found");
+                return null;
             }
             
-            var sunriseSunsetResponse = _sunApi.GetSunriseSunset(geoCoordinates, date);
+            var sunriseSunsetResponse = await _sunApi.GetSunriseSunset(geoCoordinates, date);
             var sunriseSunset = _jsonProcessor.ProcessSunriseSunsetJson(sunriseSunsetResponse);
             var solarWatch = new SolarWatch
             {
@@ -59,7 +60,7 @@ public class SolarController : ControllerBase
         }
         catch (Exception e)
         {
-            return StatusCode(500, $"An error occurred: {e.Message}");
+            return NotFound(e.Message + " Please provide a valid city.");
         }
     }
 

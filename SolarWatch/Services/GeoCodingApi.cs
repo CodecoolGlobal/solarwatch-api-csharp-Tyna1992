@@ -13,18 +13,18 @@ public class GeoCodingApi : IGeoCodingApi
         _apiKey = "d00266d7b05eb74f62ad1714907c8af5";
     }
 
-    public string GetCoordinates(string city)
+    public async Task<string> GetCoordinates(string city)
     {
         var url = $"http://api.openweathermap.org/geo/1.0/direct?q={city}&limit={1}&appid={_apiKey}";
         
-            using var client = new WebClient();
-            var response = client.DownloadString(url);
+            using var client = new HttpClient();
+            var response = await client.GetAsync(url);
             _logger.LogInformation($"Received data from API: {response}");
-            if(response == "[]")
+            if( response.StatusCode == HttpStatusCode.NotFound)
             {
                 return null;
             }
 
-            return response;
+            return await response.Content.ReadAsStringAsync();
     }
 }

@@ -13,12 +13,12 @@ public class SunApi : ISunApi
         _logger = logger;
     }
     
-    public string GetSunriseSunset(GeoCoordinates coordinates, DateOnly date)
+    public async Task<string> GetSunriseSunset(GeoCoordinates coordinates, DateOnly date)
     {
         var url = $"https://api.sunrise-sunset.org/json?lat={coordinates.Latitude}&lng={coordinates.Longitude}&date={date.Year}-{date.Month}-{date.Day}&formatted=0&date={date.Year}-{date.Month}-{date.Day}";
-        var client = new WebClient();
-        var response = client.DownloadString(url);
+        var client = new HttpClient();
+        var response = await client.GetAsync(url);
 
-        return response;
+        return await  response.Content.ReadAsStringAsync();
     }
 }

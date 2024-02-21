@@ -2,5 +2,5 @@
 
 public interface IGeoCodingApi
 {
-    string GetCoordinates(string city);
+    Task<string> GetCoordinates(string city);
 }

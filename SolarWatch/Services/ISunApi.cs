@@ -2,5 +2,5 @@
 
 public interface ISunApi
 {
-    string GetSunriseSunset(GeoCoordinates coordinates, DateOnly date);
+    Task<string> GetSunriseSunset(GeoCoordinates coordinates, DateOnly date);
 }
