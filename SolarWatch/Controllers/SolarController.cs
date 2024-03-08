@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SolarWatch.Model;
 using SolarWatch.Services;
@@ -36,7 +37,7 @@ public class SolarController : ControllerBase
     }
 
 
-    [HttpGet("SunriseSunset")]
+    [HttpGet("SunriseSunset"), Authorize(Roles="User")]
     public async Task<ActionResult<SolarWatch>> GetSunriseSunset([Required] string city, [Required] DateTime date)
     {
        
@@ -46,7 +47,7 @@ public class SolarController : ControllerBase
             
             if (existingCity == null)
             {
-                Console.WriteLine("Nullos az adatbázis");
+                
                 var geoCoordinatesResponse = await _geoCodingApi.GetCoordinates(city);
                 var geoCoordinates = _jsonProcessor.ProcessCoordinatesJson(geoCoordinatesResponse);
                 var locationInfo = _jsonProcessor.ProcessCityJson(geoCoordinatesResponse);
@@ -59,8 +60,6 @@ public class SolarController : ControllerBase
                         Name = city,
                         Coordinates = geoCoordinates,
                         Country = locationInfo
-                        
-                        
                         
                     };
                 }
