@@ -20,7 +20,7 @@ public class GeoCoordinatesContext : DbContext
         builder.Entity<SunriseSunset>()
             .HasOne(ss => ss.City)
             .WithOne(c => c.SunriseSunset)
-            .HasForeignKey<City>(c => c.SunriseSunsetId); // Use SunriseSunsetId from City as the foreign key
+            .HasForeignKey<City>(c => c.SunriseSunsetId); 
 
         builder.Entity<City>()
             .HasIndex(city => city.Name).IsUnique();
