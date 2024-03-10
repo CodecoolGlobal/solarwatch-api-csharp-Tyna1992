@@ -5,6 +5,8 @@ import App from './App.jsx'
 import Home from './Pages/Home.jsx'
 import Registration from './Pages/Registration.jsx'
 import Login from './Pages/Login.jsx'
+import SolarWatch from './Pages/SolarData.jsx'
+import AllData from './Pages/All.jsx';
 import './index.css'
 
 
@@ -25,7 +27,17 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login/>
+      },
+      {
+        path: "/solarwatch",
+        element: <SolarWatch/>
+      },
+      {
+        path: "/all",
+        element: <AllData/>
+      
       }
+
 
     ]
   }
