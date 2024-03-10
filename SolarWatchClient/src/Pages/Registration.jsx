@@ -7,7 +7,8 @@ function Registration() {
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
 
-    const register = async () => {
+    const register = async (e) => {
+        e.preventDefault();
         try {
             const response = await fetch("/api/Auth/register", {
                 method: "POST",
@@ -39,20 +40,27 @@ function Registration() {
 
     return (
         <div className="register">
+            <form onSubmit={register}>
             <label>
                 Username:
             </label>
+            <br />
             <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
             <label>
                 Password:
             </label>
+            <br />
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
             <label>
                 Email:
             </label>
+            <br />
             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <button className="button" onClick={register}>Register</button>
+            <br />
+            <button className="button" type="submit">Register</button>
+            <br />
             <button className="button" onClick={handleClear}>Clear</button>
+            </form>
         </div>
     )
 }
