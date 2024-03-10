@@ -23,6 +23,10 @@ public class SunriseSunsetRepository : ISunsetSunriseRepository
         return _dbContext.SunriseSunsets.FirstOrDefault(ss => ss.City.Id == cityId && ss.Sunrise.Date == date);
     }
 
+    public SunriseSunset? GetById(int cityId)
+    {
+        return _dbContext.SunriseSunsets.FirstOrDefault(ss => ss.City.Id == cityId);
+    }
     public void Add(SunriseSunset sunriseSunset)
     {
        

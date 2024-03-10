@@ -10,4 +10,5 @@ public interface ISunsetSunriseRepository
     void Add(SunriseSunset sunriseSunset);
     void Delete(SunriseSunset sunriseSunset);
     void Update(SunriseSunset sunriseSunset);
+    SunriseSunset? GetById(int cityId);
 }
