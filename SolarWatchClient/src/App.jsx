@@ -18,11 +18,11 @@ function App() {
           <Link to = "/login">
             <button className='button' type='button'>Login</button>
           </Link>
-          <Link to = "/">
-            <button className='button' type='button'>Logout</button>
-          </Link>
           <Link to = "/solarwatch">
             <button className='button' type='button'>Get solar data</button>
+          </Link>
+          <Link to= "/all">
+            <button className='button' type='button'>All the available solar data</button>
           </Link>
         </ul>
       </nav>
