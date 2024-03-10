@@ -13,6 +13,8 @@
   color: black;
   font-family: 'Courier New', Courier, monospace;
   font-style: italic;
+  margin: 10px;
+  
 }
 
 .button:hover{
@@ -43,3 +45,61 @@
   flex: 1;
 }
 
+.result{
+  padding: 0.5rem;
+}
+form {
+  display: grid;
+  font-size: 1.2rem;
+  font-family: 'Courier New', Courier, monospace;
+  font-style: italic;
+  margin: 0 auto;
+  width: 200px;
+}
+
+table td,
+table th {
+  padding: 0.2rem;
+  border: 1px solid #000;
+  text-align: center;
+  font-size: 1.2rem;
+  font-family: 'Courier New', Courier, monospace;
+  font-style: italic;
+  width: 500px;
+
+}
+table {
+  width: fit-content;
+  text-align: center;
+  border-collapse: collapse;
+}
+
+table tbody tr {
+  background-color: rgb(198, 218, 255);
+  width: fit-content;
+  text-align: center;
+  border-collapse: collapse;
+
+}
+
+table tbody tr:nth-child(even) {
+  background-color: rgb(219, 230, 255);
+}
+
+body{
+  background-image: url("https://thegrangefestival.co.uk/uploads/images/Learning@TheGrange/Dawn-to-Dusk/_headerXl/Dawn-To-Dusk-Web-Header-v2.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+.sunset{
+  width: 15%;
+  height: 15%;
+}
+
+.sunrise{
+  width: 15%;
+  height: 15%;
+}
