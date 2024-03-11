@@ -44,6 +44,9 @@ void AddAuthentication()
 {
     builder.Services
         .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddCookie(options => {
+            options.Cookie.Name = "Authorization";
+        })
         .AddJwtBearer(options =>
         {
             var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
@@ -58,6 +61,17 @@ void AddAuthentication()
                 ValidIssuer = jwtSettings.ValidIssuer,
                 ValidAudience = jwtSettings.ValidAudience,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(issuerSigningKey)),
+            };
+            options.Events = new JwtBearerEvents
+            {
+                OnMessageReceived = context =>
+                {
+                    if (context.Request.Cookies.ContainsKey("Authorization"))
+                    {
+                        context.Token = context.Request.Cookies["Authorization"];
+                    }
+                    return Task.CompletedTask;
+                }
             };
         });
 }

@@ -49,7 +49,12 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        return Ok(new AuthResponse(result.Email, result.UserName, result.Token));
+        Response.Cookies.Append("Authorization", result.Token, new CookieOptions
+        {
+            HttpOnly = true
+        });
+
+        return Ok(new AuthResponse(result.Email, result.UserName));
     }
 
     private void AddErrors(AuthResult result)
