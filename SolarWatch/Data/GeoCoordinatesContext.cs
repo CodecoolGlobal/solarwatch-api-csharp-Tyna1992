@@ -8,11 +8,12 @@ public class GeoCoordinatesContext : DbContext
     public DbSet<City> Cities { get; set; }
     public DbSet<SunriseSunset> SunriseSunsets { get; set; }
     
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    
+    public GeoCoordinatesContext(DbContextOptions<GeoCoordinatesContext> options) : base(options)
     {
-        optionsBuilder.UseSqlServer(
-            "Server=localhost,1433;Database=SolarWatch;User Id=sa;Password=Zakuro19920120;Encrypt=false;");
     }
+    
+    
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
