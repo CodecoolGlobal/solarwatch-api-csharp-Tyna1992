@@ -1,6 +1,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SolarWatch.Data;
@@ -126,8 +127,17 @@ void ConfigureSwagger()
 
 void AddDbContext()
 {
-    builder.Services.AddDbContext<GeoCoordinatesContext>();
-    builder.Services.AddDbContext<UserContext>();
+    builder.Services.AddDbContext<GeoCoordinatesContext>(options =>
+    {
+        options.UseSqlServer(
+            "Server=localhost,1433;Database=SolarWatch;User Id=sa;Password=Zakuro19920120;Encrypt=false;");
+    });
+    builder.Services.AddDbContext<UserContext>(options =>
+    {
+        options.UseSqlServer(
+            "Server=localhost,1433;Database=SolarWatch;User Id=sa;Password=Zakuro19920120;Encrypt=false;");
+    
+    });
 }
 
 void AddServices()
