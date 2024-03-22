@@ -1,13 +1,10 @@
 ﻿using System.Net.Http.Json;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
 using SolarWatch.Contracts;
-using SolarWatch.Controllers;
 using SolarWatch.Services.Authentication;
 
 namespace SolarTests;
-
+[Collection("Integration")]
 public class AuthControllerTests
 {
     [Fact]

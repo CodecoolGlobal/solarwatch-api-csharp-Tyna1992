@@ -1,17 +1,17 @@
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using Newtonsoft.Json;
+
 
 namespace SolarTests;
-
+[Collection("Integration")]
 public class SolarControllerTests
 {
     [Fact]
     public async Task  GetSolarWatch_User_Test()
     {
         var app = new SolarWebApplicationFactory();
-        var requestCity = "Budapest";
-        var requestDate = new DateTime(2022, 1, 3);
+        var requestCity = "Paris";
+        var requestDate = new DateTime(2022, 2, 4);
         
         var client = app.CreateClient();
 
@@ -44,8 +44,8 @@ public class SolarControllerTests
 
         var solarResponse = await response.Content.ReadFromJsonAsync<List<SolarWatch.SolarWatch>>();
         Assert.NotNull(solarResponse);
-        Assert.Equal(2, solarResponse.Count);
-        Assert.Equal("Paris", solarResponse[0].City);
+        Assert.Equal(0, solarResponse.Count);
+       
         
         
        

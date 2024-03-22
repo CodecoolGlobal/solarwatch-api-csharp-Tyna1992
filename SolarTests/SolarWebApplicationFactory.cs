@@ -1,6 +1,5 @@
-﻿using System.Data.Common;
+﻿using Castle.Core.Configuration;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -9,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using SolarWatch.Data;
+
 
 namespace SolarTests;
 
@@ -20,8 +20,9 @@ internal class SolarWebApplicationFactory : WebApplicationFactory<Program>
         {
             services.RemoveAll(typeof(DbContextOptions<GeoCoordinatesContext>));
             services.RemoveAll(typeof(DbContextOptions<UserContext>));
-            var connectionString = "Server=localhost,1433;Database=SolarWatch_Test;User Id=sa;Password=Zakuro19920120;Encrypt=false;";
-            Console.WriteLine(connectionString);
+
+
+            var connectionString = GetConnectionString();
             services.AddDbContext<GeoCoordinatesContext>(options =>
                 options.UseSqlServer(connectionString));
 
@@ -30,24 +31,34 @@ internal class SolarWebApplicationFactory : WebApplicationFactory<Program>
 
             services.AddAuthentication("TestScheme")
                 .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>("TestScheme", options => { });
-            
+
             services.AddAuthentication("TestAdminScheme")
-                .AddScheme<AuthenticationSchemeOptions,TestAuthHandler >("TestAdminScheme", options => { });
-            
+                .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>("TestAdminScheme", options => { });
+
             using (var scope = services.BuildServiceProvider().CreateScope())
             {
                 var geoContext = scope.ServiceProvider.GetRequiredService<GeoCoordinatesContext>();
                 var userContext = scope.ServiceProvider.GetRequiredService<UserContext>();
 
+                
+                geoContext.Database.EnsureDeleted();
                 geoContext.Database.EnsureCreated();
                 userContext.Database.Migrate();
                 userContext.Database.EnsureCreated();
 
-                
+
             }
         });
     }
 
-    
-    
+    private static string? GetConnectionString()
+    {
+        var configuration = new ConfigurationBuilder()
+            .AddUserSecrets<SolarWebApplicationFactory>()
+            .Build();
+
+        var connString = configuration.GetConnectionString("SolarWatchTest");
+        return connString;
+    }
+   
 }
