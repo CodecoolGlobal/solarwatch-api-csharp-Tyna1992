@@ -31,13 +31,13 @@ public class AuthControllerTests
     }
 
     [Fact]
-    public async Task LoginUser_Test_Success()
+    public async Task LoginAdmin_Test_Success()
     {
         var app = new SolarWebApplicationFactory();
         var client = app.CreateClient();
         var request = new AuthRequest(
-            Email: "testUser@test.com",
-            Password: "test123"
+            Email: "admin@admin.com",
+            Password: "admin123"
             );
        var response = await client.PostAsJsonAsync("api/Auth/Login", request);
         
@@ -46,7 +46,7 @@ public class AuthControllerTests
         var authResponse = await response.Content.ReadFromJsonAsync<AuthResponse>();
         
         Assert.Equal(request.Email, authResponse.Email);
-        Assert.Equal("testUser", authResponse.UserName);     
+        Assert.Equal("admin", authResponse.UserName);     
     }
     
     
