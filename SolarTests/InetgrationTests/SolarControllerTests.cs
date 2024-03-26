@@ -44,7 +44,7 @@ public class SolarControllerTests
 
         var solarResponse = await response.Content.ReadFromJsonAsync<List<SolarWatch.SolarWatch>>();
         Assert.NotNull(solarResponse);
-        Assert.Equal(0, solarResponse.Count);
+        Assert.Empty(solarResponse);
        
         
         

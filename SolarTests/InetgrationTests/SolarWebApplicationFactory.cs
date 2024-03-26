@@ -16,15 +16,24 @@ internal class SolarWebApplicationFactory : WebApplicationFactory<Program>
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
-        builder.ConfigureTestServices(services =>
+        builder.ConfigureAppConfiguration((context, config) =>
+        {
+            var env = context.HostingEnvironment;
+            config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+        });
+        
+        builder.ConfigureServices((context, services) =>
         {
             services.RemoveAll(typeof(DbContextOptions<GeoCoordinatesContext>));
             services.RemoveAll(typeof(DbContextOptions<UserContext>));
 
-
-            var connectionString = GetConnectionString();
+           
+            var configuration = context.Configuration;
+            var connectionString = configuration.GetConnectionString("TestDatabase");
             services.AddDbContext<GeoCoordinatesContext>(options =>
                 options.UseSqlServer(connectionString));
+                
 
             services.AddDbContext<UserContext>(options =>
                 options.UseSqlServer(connectionString));
