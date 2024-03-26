@@ -21,7 +21,7 @@ jobs:
     # Step to start SQL Server Docker container
     - name: Start SQL Server Container
       run: |
-        docker run -d -p 1433:1433 --name sql_server_container -e ACCEPT_EULA=Y -e SA_PASSWORD=YourStrong!Password mcr.microsoft.com/mssql/server:latest
+            docker run -d -p 1433:1433 --name sql_server_container -e ACCEPT_EULA=Y -e SA_PASSWORD=Zakuro19920120 mcr.microsoft.com/mssql/server:latest
 
     # Step to wait for SQL Server to initialize (adjust sleep time as needed)
     - name: Wait for SQL Server Initialization
