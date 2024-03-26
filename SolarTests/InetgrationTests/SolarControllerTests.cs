@@ -15,7 +15,7 @@ public class SolarControllerTests
         
         var client = app.CreateClient();
 
-        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme");
+        
         
         var response = await client.GetAsync($"api/Solar/SunriseSunset/{requestCity}/{requestDate}");
         

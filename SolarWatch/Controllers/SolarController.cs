@@ -37,7 +37,7 @@ public class SolarController : ControllerBase
     }
 
 
-    [HttpGet("SunriseSunset/{city}/{date}"), Authorize(Roles = "User, Admin")]
+    [HttpGet("SunriseSunset/{city}/{date}")]
     public async Task<ActionResult<SolarWatch>> GetSunriseSunset([Required] string city, [Required] DateTime date)
     {
         var existingCity = _cityRepository.GetByName(city);
