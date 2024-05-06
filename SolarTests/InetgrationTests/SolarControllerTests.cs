@@ -1,12 +1,19 @@
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
+using Xunit.Abstractions;
 
 
 namespace SolarTests;
 [Collection("Integration")]
 public class SolarControllerTests
 {
+    private readonly ITestOutputHelper _testOutputHelper;
+
+    public SolarControllerTests(ITestOutputHelper testOutputHelper)
+    {
+        _testOutputHelper = testOutputHelper;
+    }
 
     [Fact]
     public async Task GetSolarData()
@@ -16,7 +23,7 @@ public class SolarControllerTests
         var city = "Budapest";
         var date = new DateTime(2025, 01, 01);
 
-        var response = await client.GetAsync($"/api/Solar/SunriseSunset/{city}/2025-01-01");
+        var response = await client.GetAsync($"/api/Solar/SunriseSunset/{city}/2021.01.01");
         
         response.EnsureSuccessStatusCode();
 
