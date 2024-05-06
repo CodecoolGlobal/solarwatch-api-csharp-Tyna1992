@@ -22,8 +22,9 @@ public class SolarControllerTests
         var client = app.CreateClient();
         var city = "Budapest";
         var date = new DateTime(2025, 01, 01);
+        var formattedDate = date.ToString("yyyy-MM-dd");
 
-        var response = await client.GetAsync($"/api/Solar/SunriseSunset/{city}/2021.01.01");
+        var response = await client.GetAsync($"/api/Solar/SunriseSunset/{city}/{formattedDate}");
         
         response.EnsureSuccessStatusCode();
 
