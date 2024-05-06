@@ -1,8 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using SolarWatch.Model;
 using SolarWatch.Services;
 using SolarWatch.Services.Repositories;
@@ -49,7 +53,8 @@ public class SolarController : ControllerBase
             var geoCoordinates = _jsonProcessor.ProcessCoordinatesJson(geoCoordinatesResponse);
             var locationInfo = _jsonProcessor.ProcessCityJson(geoCoordinatesResponse);
 
-
+            _logger.LogInformation(geoCoordinatesResponse);
+            Console.WriteLine(geoCoordinatesResponse);
             if (geoCoordinates != null)
             {
                 existingCity = new City()
