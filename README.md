@@ -30,18 +30,18 @@
 
 ##  Quick Links
 
-> - [ Overview](#-overview)
-> - [ Features](#-features)
-> - [ Repository Structure](#-repository-structure)
-> - [ Modules](#-modules)
-> - [ Getting Started](#-getting-started)
->   - [ Installation](#-installation)
->   - [ Running solarwatch-api-csharp-Tyna1992](#-running-solarwatch-api-csharp-Tyna1992)
->   - [ Tests](#-tests)
-> - [ Project Roadmap](#-project-roadmap)
-> - [ Contributing](#-contributing)
-> - [ License](#-license)
-> - [ Acknowledgments](#-acknowledgments)
+> - [Overview](#overview)
+> - [Features](#features)
+> - [Repository Structure](#repository-structure)
+> - [Modules](#modules)
+> - [Getting Started](#getting-started)
+>   - [Installation](#installation)
+>   - [Running solarwatch-api-csharp-Tyna1992](#running-solarwatch-api-csharp-tyna1992)
+>   - [Tests](#tests)
+> - [Project Roadmap](#project-roadmap)
+> - [Contributing](#contributing)
+> - [License](#license)
+> - [Acknowledgments](#acknowledgments)
 
 ---
 
@@ -51,7 +51,7 @@
 
 ---
 
-##  Features
+## Features
 
 <code>
 - User Registration and Authentication
@@ -65,7 +65,7 @@
 
 ---
 
-##  Repository Structure
+## Repository Structure
 
 ```sh
 └── solarwatch-api-csharp-Tyna1992/
@@ -173,7 +173,7 @@
 
 ---
 
-##  Modules
+## Modules
 
 
 
@@ -332,7 +332,7 @@
 
 ---
 
-##  Getting Started
+## Getting Started
 
 ***Requirements***
 
@@ -342,7 +342,7 @@ Ensure you have the following dependencies installed on your system:
 * **Node.js**
 * **npm**
 
-###  Installation
+### Installation
 
 1. Clone the solarwatch-api-csharp-Tyna1992 repository:
 
@@ -366,7 +366,7 @@ dotnet build
 cd SolarWatchClient
 npm install
 ```
-###  Running solarwatch-api-csharp-Tyna1992
+### Running solarwatch-api-csharp-Tyna1992
 
 Use the following command to run solarwatch-api-csharp-Tyna1992:
 
@@ -376,7 +376,7 @@ dotnet run
 ```sh
 npm run dev
 ```
-###  Tests
+### Tests
 
 To execute tests, run:
 
@@ -386,7 +386,7 @@ dotnet test
 
 ---
 
-##  Project Roadmap
+## Project Roadmap
 
 - [X] `Implement user registration and authentication`
 - [X] `Integrate external GeoCoding APIs`
@@ -394,7 +394,7 @@ dotnet test
 
 ---
 
-##  Contributing
+## Contributing
 
 Contributions are welcome! Here are several ways you can contribute:
 
@@ -432,7 +432,7 @@ Once your PR is reviewed and approved, it will be merged into the main branch.
 ---
 
 
-##  Acknowledgments
+## Acknowledgments
 
 - Special thanks to the contributors and maintainers of this project. Your efforts make this project possible.
 
